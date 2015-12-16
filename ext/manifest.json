@@ -1,5 +1,5 @@
 {
-  "name": "Cena-mania",
+  "name": "Scenify",
   "version": "0.0.1",
   "manifest_version": 2,
   "description": "Are you ready...?",
@@ -27,5 +27,12 @@
         "src/inject/inject.js"
       ]
     }
-  ]
+  ],
+
+  "options_ui": {
+    // Required.
+    "page": "options.html",
+    // Recommended.
+    "chrome_style": true
+  }
 }
