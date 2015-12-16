@@ -12,7 +12,7 @@ chrome.extension.sendMessage({}, function(response) {
         clearInterval(readyStateCheckInterval);
  
         var images = document.querySelectorAll("img");
-        var johnList = ["http://worldinsport.com/wp-content/uploads/2014/08/johncena.jpg",
+        var imageList = ["http://worldinsport.com/wp-content/uploads/2014/08/johncena.jpg",
                         "http://www.inspirationluv.com/wp-content/uploads/2015/03/john-cena-john-cena.jpg",
                         "http://www2.pictures.gi.zimbio.com/John+Cena+Lions+Gate+Premiere+See+No+Evil+nPMaSdcrckVl.jpg",
                         "http://chaddukeswrestlingshow.com/wp-content/uploads/2011/12/JON-CENA-john-cena-17402034-500-308.jpg",
@@ -25,7 +25,7 @@ chrome.extension.sendMessage({}, function(response) {
  
         for(var i = 0; i < images.length; i++){
             var element = images[i];
-            element = element.setAttribute("src",johnList[Math.floor((Math.random() * 10))]);
+            element = element.setAttribute("src",imageList[Math.floor((Math.random() * 10))]);
         }
  
         // Walk through all the nodes to get all text nodes.
@@ -54,9 +54,7 @@ chrome.extension.sendMessage({}, function(response) {
             }
         })(document.body);
  
-        textNodes.forEach(function(currentVal, index, array) {
-            // replace all case-insensitive occurences of 'cloud' with 'butt'.
-             var quoteList = [" IF YOU WANT SOME COME GET SOME ",
+        var quoteList = [" IF YOU WANT SOME COME GET SOME ",
             " THE ONLY REAL JOHN IS JOHN CENA ",
             " YOU CAN'T SEE ME ",
             " THE CHAMP IS HERE ",
@@ -68,6 +66,9 @@ chrome.extension.sendMessage({}, function(response) {
             " WORD LIFE ", 
             " BASIC THUGONOMICS ", 
             " WHETHER FIGHTING OR SPITTING, MY DISCIPLINE IS UNFORGIVING! "]; 
+ 
+        textNodes.forEach(function(currentVal, index, array) {
+            // replace all case-insensitive occurences of 'cloud' with 'butt'.
 
            currentVal.nodeValue = currentVal.nodeValue.replace(/ the /gi, quoteList[Math.floor((Math.random() * 10))] );
         });
