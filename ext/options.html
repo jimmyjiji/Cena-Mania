@@ -3,7 +3,9 @@
 <head>
   <title>My Test Extension Options</title>
   <style>
-    body: { padding: 10px; }
+    body: { padding: 10px;
+    height: 500px;
+    width: 500px; }
   </style>
 </head>
 
@@ -21,8 +23,17 @@
     I like colors.
   </label>
 
-  <div id="status"></div>
+  
   <button id="save">Save</button>
+  <div id="status"></div>
+
+  <div id="quotes">
+  	<table id="quoteList">
+  		<tr>
+  			<th>Quote</th>
+  		</tr>
+  	</table>
+  </div>
 
   <script src="options.js"></script>
 </body>
