@@ -46,7 +46,6 @@ function restore_options() {
     var quotesArray = JSON.parse(items.quotes);
 
     var quoteList = document.getElementById('quoteList');
-    console.log(quoteList);
 
     //add a table header for the quotes table.
     
@@ -60,7 +59,6 @@ function restore_options() {
     addQuoteButton.addEventListener('click', addQuoteRow);
     quoteHeaderRow.appendChild(addQuoteButton);
 
-    console.log(quotesArray.length);
     for (var i = 0; i < quotesArray.length; i++) {
       //Insert a new row into the table for a quote.
       var newQuoteRow = quoteList.insertRow(-1);
@@ -76,15 +74,15 @@ function restore_options() {
       var deleteQuoteButton = document.createElement('button');
       deleteQuoteButton.innerHTML = "x";
       cellTwo.appendChild(deleteQuoteButton);
-      //deleteQuoteButton.addEventListener('click', deleteCurrentRow(deleteQuoteButton));
+      deleteQuoteButton.addEventListener('click', deleteCurrentQuoteRow);
     }
 
     
   });
 }
 
-function deleteCurrentRow(button) {
-  var currentRow = button.parentNode.parentNode; //get the grandparent node, which is the row containing the cell containing the button.
+function deleteCurrentQuoteRow() {
+  var currentRow = this.parentNode.parentNode; //get the grandparent node, which is the row containing the cell containing the button.
   currentRow.parentNode.removeChild(currentRow); //delete the row in the table
 }
 
@@ -104,5 +102,5 @@ function addQuoteRow() {
     var deleteQuoteButton = document.createElement('button');
     deleteQuoteButton.innerHTML = "x";
     cellTwo.appendChild(deleteQuoteButton);
-    //deleteQuoteButton.addEventListener('click', deleteCurrentRow(deleteQuoteButton));
+    //deleteQuoteButton.addEventListener('click', deleteCurrentQuoteRow(deleteQuoteButton));
 }
