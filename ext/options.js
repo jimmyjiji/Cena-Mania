@@ -4,18 +4,17 @@ document.getElementById('save').addEventListener('click',
 
 // Saves options to chrome.storage.sync.
 function save_options() {
-  var color = document.getElementById('color').value;
-  var likeValue = document.getElementById('like').checked;
   var quoteList = document.getElementsByClassName('quote');
   var quoteArray = [];
   for (var i = 0; i < quoteList.length; i++) {
-    quoteArray.push(quoteList[i].value);
+    if (quoteList[i].value.length != 0) {
+      quoteArray.push(quoteList[i].value);
+    }
   }
-  console.log(quoteArray);
+  var quoteArrayJSON = JSON.stringify(quoteArray);
+  console.log(quoteArrayJSON);
   chrome.storage.sync.set({
-    'favoriteColor': color,
-    'likesColor': likeValue,
-    'quotes': quoteArray
+    'quotes': quoteArrayJSON
   }, function() {
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
@@ -42,32 +41,68 @@ function restore_options() {
             "VINCE MCMAHON OWNS ME", 
             "WORD LIFE", 
             "BASIC THUGONOMICS", 
-            "WHETHER FIGHTING OR SPITTING, MY DISCIPLINE IS UNFORGIVING!"],
-    'favoriteColor': 'red',
-    'likesColor': true
+            "WHETHER FIGHTING OR SPITTING, MY DISCIPLINE IS UNFORGIVING!"]
   }, function(items) {
-    document.getElementById('color').value = items.favoriteColor;
-    document.getElementById('like').checked = items.likesColor;
-    var quotes = items.quotes;
-    var quoteList = document.getElementById('quoteList');
+    var quotesArray = JSON.parse(items.quotes);
 
-    for (var i = 0; i < quotes.length; i++) {
+    var quoteList = document.getElementById('quoteList');
+    console.log(quoteList);
+
+    //add a table header for the quotes table.
+    
+    var quoteHeaderRow = quoteList.insertRow(0);
+    var quoteHeader = document.createElement('th');
+    quoteHeader.innerHTML = "Quotes: "
+    quoteHeaderRow.appendChild(quoteHeader);
+
+    var addQuoteButton = document.createElement('button');
+    addQuoteButton.innerHTML = "+";
+    addQuoteButton.addEventListener('click', addQuoteRow);
+    quoteHeaderRow.appendChild(addQuoteButton);
+
+    console.log(quotesArray.length);
+    for (var i = 0; i < quotesArray.length; i++) {
       //Insert a new row into the table for a quote.
-      var newQuoteRow = quoteList.insertRow(i);
+      var newQuoteRow = quoteList.insertRow(-1);
       var cellOne = newQuoteRow.insertCell(0);
       var cellTwo = newQuoteRow.insertCell(1);
 
       //Insert editable text boxes for quotes to insert.
       var quoteInput = document.createElement('input');
-      quoteInput.value = quotes[i];
-      quoteInput.class = "quote";
+      quoteInput.value = quotesArray[i];
+      quoteInput.className = "quote";
       cellOne.appendChild(quoteInput);
+
+      var deleteQuoteButton = document.createElement('button');
+      deleteQuoteButton.innerHTML = "x";
+      cellTwo.appendChild(deleteQuoteButton);
+      //deleteQuoteButton.addEventListener('click', deleteCurrentRow(deleteQuoteButton));
     }
 
-    //add a table header for the quotes table.
-    var quoteHeaderRow = quoteList.insertRow(0);
-    var quoteHeader = document.createElement('th');
-    quoteHeader.innerHTML = "Quotes: "
-    quoteHeaderRow.appendChild(quoteHeader);
+    
   });
+}
+
+function deleteCurrentRow(button) {
+  var currentRow = button.parentNode.parentNode; //get the grandparent node, which is the row containing the cell containing the button.
+  currentRow.parentNode.removeChild(currentRow); //delete the row in the table
+}
+
+function addQuoteRow() {
+   var quoteList = document.getElementById('quoteList');
+
+   //Insert a new row into the table for a quote.
+    var newQuoteRow = quoteList.insertRow(-1);
+    var cellOne = newQuoteRow.insertCell(0);
+    var cellTwo = newQuoteRow.insertCell(1);
+
+    //Insert editable text boxes for quotes to insert.
+    var quoteInput = document.createElement('input');
+    quoteInput.className = "quote";
+    cellOne.appendChild(quoteInput);
+
+    var deleteQuoteButton = document.createElement('button');
+    deleteQuoteButton.innerHTML = "x";
+    cellTwo.appendChild(deleteQuoteButton);
+    //deleteQuoteButton.addEventListener('click', deleteCurrentRow(deleteQuoteButton));
 }
