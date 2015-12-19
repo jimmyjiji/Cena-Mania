@@ -24,8 +24,13 @@ chrome.extension.sendMessage({}, function(response) {
                         "http://images.enstarz.com/data/images/full/3786/john-cena.jpg?w=580"];
  
         for(var i = 0; i < images.length; i++){
-            var element = images[i];
-            element = element.setAttribute("src",imageList[Math.floor((Math.random() * 10))]);
+            try {
+                var element = images[i];
+                element = element.setAttribute("src",imageList[Math.floor((Math.random() * 10))]);
+            }
+            catch (err) {
+                console.log("Invalid image.");
+            }
         }
  
         // Walk through all the nodes to get all text nodes.
