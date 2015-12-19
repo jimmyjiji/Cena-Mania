@@ -1,8 +1,8 @@
 {
-  "name": "Cena-mania",
+  "name": "Scenify",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "Are you ready...?",
+  "description": "Replace all the images on a website with your own, insert random text, and autoplay music!",
   "homepage_url": "http://extensionizr.com",
   "icons": {
     "16": "icons/icon 128.png",
@@ -12,11 +12,12 @@
   "default_locale": "en",
   "browser_action": {
     "default_icon": "icons/icon 128.png",
-    "default_title": "browser action demo",
-    "default_popup": "src/browser_action/browser_action.html"
+    "default_title": "Options",
+    "default_popup": "options.html"
   },
   "permissions": [
-    "*://*/\\*"
+    "*://*/\\*",
+    "storage"
   ],
   "content_scripts": [
     {
@@ -27,5 +28,12 @@
         "src/inject/inject.js"
       ]
     }
-  ]
+  ],
+
+  "options_ui": {
+    // Required.
+    "page": "options.html",
+    // Recommended.
+    "chrome_style": true
+  }
 }
