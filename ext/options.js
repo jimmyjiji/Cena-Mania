@@ -15,6 +15,7 @@ function save_options() {
   }
   var quoteArrayJSON = JSON.stringify(quoteArray);
 
+  //Save the nonempty items in the image list to a string in JSON format.
   var imageList = document.getElementsByClassName('image');
   var imageArray = [];
   for (var i = 0; i < imageList.length; i++) {
@@ -24,6 +25,7 @@ function save_options() {
   }
   var imageArrayJSON = JSON.stringify(imageArray);
 
+  //Save the value of the music box as a string.
   var musicList = document.getElementsByClassName('music');
   var songName = musicList[0].value;
 
@@ -32,6 +34,7 @@ function save_options() {
     'images': imageArrayJSON,
     'music': songName
   }, function() {
+
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
     status.textContent = 'Options saved.';
@@ -41,10 +44,8 @@ function save_options() {
   });
 }
 
-// Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
+// Restores tables using the preferences stored in chrome.storage.
 function restore_options() {
-  // Use default value color = 'red' and likesColor = true.
   chrome.storage.sync.get({
     'music': 'http://memberfiles.freewebs.com/20/20/67812020/podcast/John%20Cena%20-%20Your%20time%20is%20up.mp3',
     'quotes': ["IF YOU WANT SOME COME GET SOME",
@@ -70,6 +71,8 @@ function restore_options() {
             "http://cdn.papermag.com/uploaded_images/shia.jpg",
             "http://images.enstarz.com/data/images/full/3786/john-cena.jpg?w=580"]
   }, function(items) {
+    // if there is a JSON-formatted string in storage, parse it into an array.
+    // otherwise, set it to the default array.
     try {
       var quotesArray = JSON.parse(items.quotes);
     }
